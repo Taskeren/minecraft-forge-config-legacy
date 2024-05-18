@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    `maven-publish`
 }
 
 group = "cn.taskeren"
@@ -8,6 +9,8 @@ version = "1.0-SNAPSHOT"
 java {
     targetCompatibility = JavaVersion.VERSION_1_8
     sourceCompatibility = JavaVersion.VERSION_1_8
+
+    withSourcesJar()
 }
 
 repositories {
@@ -25,4 +28,17 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+publishing {
+    repositories {
+        mavenLocal()
+    }
+
+    publications {
+        create<MavenPublication>("maven") {
+            artifactId = "minecraft-forge-config-legacy"
+            from(components["java"])
+        }
+    }
 }
